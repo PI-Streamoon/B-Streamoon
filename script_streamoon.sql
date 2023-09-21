@@ -1,6 +1,14 @@
+DROP USER 'StreamoonUser'@'%';
+DELETE FROM mysql.user where user = 'StreamoonUser';
+
+CREATE USER 'StreamoonUser'@'%' IDENTIFIED BY 'Moon2023';
+GRANT ALL PRIVILEGES ON streamoon.* TO 'StreamoonUser'@'%';
+FLUSH PRIVILEGES;
+
+DROP DATABASE IF EXISTS streamoon;
 CREATE database streamoon;
 USE streamoon;
-drop database streamoon;
+
 CREATE TABLE IF NOT EXISTS empresa (
     idEmpresa INT NOT NULL AUTO_INCREMENT,
     nome VARCHAR(45) NULL,
@@ -14,7 +22,7 @@ CREATE TABLE IF NOT EXISTS usuario (
     fkEmpresa INT NOT NULL,
     fkAdmin INT,
     nome VARCHAR(50) NOT NULL,
-    senha VARCHAR(30) NOT NULL,
+    senha VARCHAR(100) NOT NULL,
     cpf CHAR(11) NOT NULL,
     email VARCHAR(50) NOT NULL,
     PRIMARY KEY (`idUsuario` , `fkEmpresa`),
