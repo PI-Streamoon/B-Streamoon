@@ -1,5 +1,5 @@
 DROP USER 'StreamoonUser'@'%';
-DELETE FROM mysql.user where user = 'StreamoonUser';
+-- DELETE FROM mysql.user where user = 'StreamoonUser';
 
 CREATE USER 'StreamoonUser'@'%' IDENTIFIED BY 'Moon2023';
 GRANT ALL PRIVILEGES ON streamoon.* TO 'StreamoonUser'@'%';
@@ -104,7 +104,7 @@ CREATE TABLE IF NOT EXISTS registro (
 select * from registro;
   CREATE VIEW tabelaRegistros AS
     SELECT 
-        registro.idRegistro AS 'IdRegistro',
+		registro.idRegistro AS 'IdRegistro',
         registro.registro AS 'Registro',
         registro.dtHora AS 'MomentoRegistro',
         componente.nome AS 'Componente',
@@ -178,7 +178,7 @@ INSERT INTO unidadeMedida (idUnidadeMedida, nomeMedida)
 VALUES
   (null, 'GHZ'),
   (null, 'GB'),
-  (null, 'KBPS'),
+  (null, 'Mbps'),
   (null, '%');
  
 -- Tabela componente
@@ -188,7 +188,11 @@ VALUES
   (null, 4, 'Memoria'),
   (null, 2, 'MemoriaUsada'),
   (null, 2, 'MemoriaTotal'),
-  (null, 4, 'Disco');
+  (null, 4, 'Disco'),
+  (null, 3, 'Upload'),
+  (null, 3, 'Download');
+
+SELECT * FROM componente;
 
 -- Tabela componenteServidor
 INSERT INTO componenteServidor (idComponenteServidor, fkServidor, fkComponente)
@@ -197,7 +201,9 @@ VALUES
   (null, 2222, 101),
   (null, 2222, 102),
   (null, 2222, 103),
-  (null, 2222, 104);
+  (null, 2222, 104),
+  (null, 2222, 105),
+  (null, 2222, 106);
 
 -- Tabela registro
 INSERT INTO registro (idRegistro, registro, dtHora, fkComponenteServidor)
