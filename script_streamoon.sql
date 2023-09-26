@@ -104,6 +104,7 @@ CREATE TABLE IF NOT EXISTS registro (
 select * from registro;
   CREATE VIEW tabelaRegistros AS
     SELECT 
+        registro.idRegistro AS 'IdRegistro',
         registro.registro AS 'Registro',
         registro.dtHora AS 'MomentoRegistro',
         componente.nome AS 'Componente',
