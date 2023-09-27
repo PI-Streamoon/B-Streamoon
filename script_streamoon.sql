@@ -251,6 +251,7 @@ DEALLOCATE PREPARE stmt;
 -- Selects de Teste
   select * from tabelaRegistros;
 
+ CREATE VIEW registroColunar AS
   select MomentoRegistro, 
   max(case when Componente = 'CPU' then Registro end) 'CPU',
   max(case when Componente = 'Memoria' then Registro end) 'Memória',
