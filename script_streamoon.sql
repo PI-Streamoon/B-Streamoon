@@ -50,9 +50,13 @@ CREATE TABLE IF NOT EXISTS locais (
 CREATE TABLE IF NOT EXISTS servidor (
     idServidor INT NOT NULL AUTO_INCREMENT,
     fkLocais INT NOT NULL,
+    fkOrigem INT NOT NULL,
     PRIMARY KEY (idServidor),
+    CONSTRAINT `fk_Servidor_Origem` FOREIGN KEY (`fkOrigem`)
+      REFERENCES servidor(`idServidor`)
+        ON DELETE NO ACTION ON UPDATE NO ACTION,
     CONSTRAINT `fk_Servidor_Locais1` FOREIGN KEY (`fkLocais`)
-        REFERENCES locais (`idLocais`)
+      REFERENCES locais (`idLocais`)
         ON DELETE NO ACTION ON UPDATE NO ACTION
 )  AUTO_INCREMENT=2222
 ;
