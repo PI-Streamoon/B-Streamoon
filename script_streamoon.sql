@@ -95,7 +95,7 @@ CREATE TABLE
 CREATE TABLE
     IF NOT EXISTS registro (
         `idRegistro` INT NOT NULL AUTO_INCREMENT,
-        `registro` INT NULL,
+        `registro` DOUBLE NULL,
         `dtHora` DATETIME NULL,
         `fkComponenteServidor` INT NOT NULL,
         PRIMARY KEY (
