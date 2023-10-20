@@ -1,3 +1,4 @@
+-- SQLBook: Code
 -- Active: 1693362679120@@127.0.0.1@3306@streamoon
 
 DROP USER 'StreamoonUser'@'%';
