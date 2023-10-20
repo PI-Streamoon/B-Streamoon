@@ -1,9 +1,8 @@
--- SQLBook: Code
 -- Active: 1693362679120@@127.0.0.1@3306@streamoon
 
 DROP USER 'StreamoonUser'@'%';
 
--- DELETE FROM mysql.user WHERE user = 'StreamoonUser';
+DELETE FROM mysql.user WHERE user = 'StreamoonUser';
 
 CREATE USER 'StreamoonUser'@'%' IDENTIFIED BY 'Moon2023';
 
@@ -242,7 +241,7 @@ INSERT INTO
         fkUnidadeMedida,
         nome
     )
-VALUES (NULL, 4, 'CPU'), (NULL, 4, 'Memoria'), (NULL, 2, 'MemoriaUsada'), (NULL, 2, 'MemoriaTotal'), (NULL, 4, 'Disco'), (NULL, 3, 'Upload'), (NULL, 3, 'Download');
+VALUES (NULL, 4, 'CPU'), (NULL, 1, 'FrequenciaCPU'),(NULL, 4, 'Memoria'), (NULL, 2, 'MemoriaUsada'), (NULL, 2, 'MemoriaTotal'), (NULL, 4, 'Disco'), (NULL, 3, 'Upload'), (NULL, 3, 'Download');
 
 SELECT * FROM componente;
 
@@ -254,7 +253,7 @@ INSERT INTO
         fkServidor,
         fkComponente
     )
-VALUES (NULL, 2222, 100), (NULL, 2222, 101), (NULL, 2222, 102), (NULL, 2222, 103), (NULL, 2222, 104), (NULL, 2222, 105), (NULL, 2222, 106);
+VALUES (NULL, 2222, 100), (NULL, 2222, 101), (NULL, 2222, 102), (NULL, 2222, 103), (NULL, 2222, 104), (NULL, 2222, 105), (NULL, 2222, 106), (NULL, 2222, 107);
 
 -- Tabela registro
 
@@ -338,9 +337,19 @@ SELECT
     ) 'CPU',
     MAX(
         CASE
+            WHEN Componente = 'FrequenciaCPU' THEN Registro
+        END
+    ) 'Frequencia CPU',
+    MAX(
+        CASE
             WHEN Componente = 'Memoria' THEN Registro
         END
     ) 'Memória',
+    MAX(
+        CASE
+            WHEN Componente = 'MemoriaUsada' THEN Registro
+        END
+    ) 'Memória Usada',
     MAX(
         CASE
             WHEN Componente = 'MemoriaTotal' THEN Registro
@@ -348,9 +357,19 @@ SELECT
     ) 'Memória Total',
     MAX(
         CASE
-            WHEN Componente = 'MemoriaUsada' THEN Registro
+            WHEN Componente = 'Disco' THEN Registro
         END
-    ) 'Memória Usada'
+    ) 'Disco',
+    MAX(
+        CASE
+            WHEN Componente = 'Upload' THEN Registro
+        END
+    ) 'Upload',
+    MAX(
+        CASE
+            WHEN Componente = 'Download' THEN Registro
+        END
+    ) 'Download'
 FROM tabelaRegistros
 GROUP BY MomentoRegistro;
 
@@ -416,3 +435,12 @@ FROM registro r
 ORDER BY
     um.nomeMedida,
     c.nome;
+    
+select * from registro 
+	join componenteServidor on fkComponenteServidor = idComponenteServidor
+    join componente 
+    join unidadeMedida
+    where fkUnidadeMedida = 3;
+    
+
+select * from registroColunar;
