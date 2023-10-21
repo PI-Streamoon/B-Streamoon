@@ -1,4 +1,4 @@
--- Active: 1693362679120@@127.0.0.1@3306@streamoon
+-- Active: 1685408949990@@localhost@3306@streamoon
 
 DROP USER 'StreamoonUser'@'%';
 
@@ -339,22 +339,22 @@ SELECT
         CASE
             WHEN Componente = 'FrequenciaCPU' THEN Registro
         END
-    ) 'Frequencia CPU',
+    ) 'FrequenciaCPU',
     MAX(
         CASE
             WHEN Componente = 'Memoria' THEN Registro
         END
-    ) 'Memória',
+    ) 'Memoria',
     MAX(
         CASE
             WHEN Componente = 'MemoriaUsada' THEN Registro
         END
-    ) 'Memória Usada',
+    ) 'MemoriaUsada',
     MAX(
         CASE
             WHEN Componente = 'MemoriaTotal' THEN Registro
         END
-    ) 'Memória Total',
+    ) 'MemoriaTotal',
     MAX(
         CASE
             WHEN Componente = 'Disco' THEN Registro
