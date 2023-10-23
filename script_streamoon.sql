@@ -1,4 +1,4 @@
--- Active: 1685408949990@@localhost@3306@streamoon
+-- Active: 1693362679120@@127.0.0.1@3306@streamoon
 
 DROP USER 'StreamoonUser'@'%';
 
@@ -195,7 +195,7 @@ VALUES (
         484019,
         1,
         'Marise',
-        'senha456293',
+        '$2a$10$i4K5pWN.1cs/5/Z9lLJ9r.VkS1W8Z/pjK5E5TMAnqgfIfSyR1RU0a',
         '12345678902',
         'marise@gmail.com'
     );
@@ -329,49 +329,53 @@ DEALLOCATE PREPARE stmt;
 
 CREATE VIEW registroColunar AS
 SELECT
-    MomentoRegistro,
+    idServidor,
+    dtHora AS MomentoRegistro,
     MAX(
         CASE
-            WHEN Componente = 'CPU' THEN Registro
+            WHEN nome = 'CPU' THEN Registro
         END
     ) 'CPU',
     MAX(
         CASE
-            WHEN Componente = 'FrequenciaCPU' THEN Registro
+            WHEN nome = 'FrequenciaCPU' THEN Registro
         END
     ) 'FrequenciaCPU',
     MAX(
         CASE
-            WHEN Componente = 'Memoria' THEN Registro
+            WHEN nome = 'Memoria' THEN Registro
         END
     ) 'Memoria',
     MAX(
         CASE
-            WHEN Componente = 'MemoriaUsada' THEN Registro
+            WHEN nome = 'MemoriaUsada' THEN Registro
         END
     ) 'MemoriaUsada',
     MAX(
         CASE
-            WHEN Componente = 'MemoriaTotal' THEN Registro
+            WHEN nome = 'MemoriaTotal' THEN Registro
         END
     ) 'MemoriaTotal',
     MAX(
         CASE
-            WHEN Componente = 'Disco' THEN Registro
+            WHEN nome = 'Disco' THEN Registro
         END
     ) 'Disco',
     MAX(
         CASE
-            WHEN Componente = 'Upload' THEN Registro
+            WHEN nome = 'Upload' THEN Registro
         END
     ) 'Upload',
     MAX(
         CASE
-            WHEN Componente = 'Download' THEN Registro
+            WHEN nome = 'Download' THEN Registro
         END
     ) 'Download'
-FROM tabelaRegistros
-GROUP BY MomentoRegistro;
+FROM registro
+INNER JOIN componenteservidor ON componenteservidor.`idComponenteServidor` = registro.`fkComponenteServidor`
+INNER JOIN servidor ON componenteservidor.`fkServidor` = servidor.`idServidor`
+INNER JOIN componente ON componente.`idComponente` = componenteservidor.`fkComponente`
+GROUP BY idServidor, MomentoRegistro;
 
 -- FIM DO CÓDIGO PARA VIEW-------------------------------------------------------------------------------------------------------------------------------------------
 
