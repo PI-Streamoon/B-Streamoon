@@ -317,7 +317,10 @@ INNER JOIN componente ON componente.`idComponente` = componenteServidor.`fkCompo
 GROUP BY idServidor, MomentoRegistro;
 
 
-SET GLOBAL validate_password.special_char_count = 0;
+IF (SELECT COUNT(*) FROM information_schema.tables WHERE table_name = 'validate_password' AND table_schema = 'mysql') > 0 
+THEN
+    SET GLOBAL validate_password.special_char_count = 0
+END IF;
 
 
 DELETE FROM mysql.user WHERE user = 'StreamoonUser';
