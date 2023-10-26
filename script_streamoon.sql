@@ -241,7 +241,7 @@ INSERT INTO
         fkUnidadeMedida,
         nome
     )
-VALUES (NULL, 4, 'CPU'), (NULL, 1, 'FrequenciaCPU'),(NULL, 4, 'Memoria'), (NULL, 2, 'MemoriaUsada'), (NULL, 2, 'MemoriaTotal'), (NULL, 4, 'Disco'), (NULL, 3, 'Upload'), (NULL, 3, 'Download');
+VALUES (NULL, 4, 'CPU'), (NULL, 1, 'FrequenciaCPU'),(NULL, 4, 'Memoria'), (NULL, 2, 'MemoriaUsada'), (NULL, 2, 'MemoriaTotal'), (NULL, 4, 'Disco'), (NULL, 2, 'DiscoEntrada'), (NULL, 2, 'DiscoSaida'), (NULL, 3, 'Upload'), (NULL, 3, 'Download');
 
 SELECT * FROM componente;
 
@@ -253,7 +253,7 @@ INSERT INTO
         fkServidor,
         fkComponente
     )
-VALUES (NULL, 2222, 100), (NULL, 2222, 101), (NULL, 2222, 102), (NULL, 2222, 103), (NULL, 2222, 104), (NULL, 2222, 105), (NULL, 2222, 106), (NULL, 2222, 107);
+VALUES (NULL, 2222, 100), (NULL, 2222, 101), (NULL, 2222, 102), (NULL, 2222, 103), (NULL, 2222, 104), (NULL, 2222, 105), (NULL, 2222, 106), (NULL, 2222, 107), (NULL, 2222, 108), (NULL, 2222, 109);
 
 -- Tabela registro
 
@@ -361,6 +361,16 @@ SELECT
             WHEN nome = 'Disco' THEN Registro
         END
     ) 'Disco',
+     MAX(
+        CASE
+            WHEN nome = 'DiscoEntrada' THEN Registro
+        END
+    ) 'DiscoEntrada',
+     MAX(
+        CASE
+            WHEN nome = 'DiscoSaida' THEN Registro
+        END
+    ) 'DiscoSaida',
     MAX(
         CASE
             WHEN nome = 'Upload' THEN Registro
@@ -372,9 +382,9 @@ SELECT
         END
     ) 'Download'
 FROM registro
-INNER JOIN componenteservidor ON componenteservidor.`idComponenteServidor` = registro.`fkComponenteServidor`
-INNER JOIN servidor ON componenteservidor.`fkServidor` = servidor.`idServidor`
-INNER JOIN componente ON componente.`idComponente` = componenteservidor.`fkComponente`
+INNER JOIN componenteServidor ON componenteServidor.`idComponenteServidor` = registro.`fkComponenteServidor`
+INNER JOIN servidor ON componenteServidor.`fkServidor` = servidor.`idServidor`
+INNER JOIN componente ON componente.`idComponente` = componenteServidor.`fkComponente`
 GROUP BY idServidor, MomentoRegistro;
 
 
@@ -428,7 +438,7 @@ GROUP BY idServidor, MomentoRegistro;
 
 -- Selects de Teste
 
---FALHAS AGRUPADOS POR SEMANA
+-- FALHAS AGRUPADOS POR SEMANA
 SELECT `idServidor`, 
     DATE(MomentoRegistro), 
     SUM(nivelFalhaCPU = 1) AS QuantFalhasCPU,
@@ -440,7 +450,7 @@ FROM falhascolunas
 WHERE MomentoRegistro >= '1990-05-20' AND MomentoRegistro <= '2023-10-30'
 GROUP BY `idServidor`, DATE(MomentoRegistro);
 
---CRITICOS AGRUPADOS POR SEMANA
+-- CRITICOS AGRUPADOS POR SEMANA
 SELECT `idServidor`, 
     DATE(MomentoRegistro), 
     SUM(nivelFalhaCPU = 2) AS QuantFalhasCPU,
