@@ -429,7 +429,7 @@ GROUP BY idServidor, MomentoRegistro;
 -- Selects de Teste
 
 --FALHAS AGRUPADOS POR SEMANA
-SELECT `idServidor`, 
+SELECT `idServidor`,
     `MomentoRegistro`, 
     SUM(nivelFalhaCPU = 1) AS QuantFalhasCPU,
     SUM(nivelFalhaMemoria = 1) AS QuantFalhasMemoria,
@@ -438,7 +438,7 @@ SELECT `idServidor`,
     SUM(nivelFalhaDownload = 1) AS QuantFalhasDownload
 FROM falhascolunas
 GROUP BY YEARWEEK(MomentoRegistro, 1);
-    
+
 --CRITICOS AGRUPADOS POR SEMANA
 SELECT `idServidor`, 
     `MomentoRegistro`, 
