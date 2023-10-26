@@ -1,4 +1,4 @@
--- Active: 1693362679120@@127.0.0.1@3306@streamoon
+-- Active: 1698205327640@@127.0.0.1@3306@streamoon
 
 DROP USER 'StreamoonUser'@'%';
 
@@ -377,9 +377,79 @@ INNER JOIN servidor ON componenteservidor.`fkServidor` = servidor.`idServidor`
 INNER JOIN componente ON componente.`idComponente` = componenteservidor.`fkComponente`
 GROUP BY idServidor, MomentoRegistro;
 
+
+CREATE VIEW falhasColunas AS
+SELECT idServidor, MomentoRegistro,
+    MAX(
+        CASE
+            WHEN CPU >= 90 THEN 1 ELSE 
+                CASE
+                    WHEN CPU >= 70 THEN 2 ELSE 0
+                END
+        END
+    ) 'nivelFalhaCPU',
+    MAX(
+        CASE
+            WHEN Memoria >= 90 THEN 1 ELSE 
+                CASE
+                    WHEN Memoria >= 70 THEN 2 ELSE 0
+                END
+        END
+    ) 'nivelFalhaMemoria',
+    MAX(
+        CASE
+            WHEN Disco >= 90 THEN 1 ELSE 
+                CASE
+                    WHEN Disco >= 70 THEN 2 ELSE 0
+                END
+        END
+    ) 'nivelFalhaDisco',
+    MAX(
+        CASE
+            WHEN Upload >= 100 THEN 1 ELSE 
+                CASE
+                    WHEN Upload >= 80 THEN 2 ELSE 0
+                END
+        END
+    ) 'nivelFalhaUpload',
+    MAX(
+        CASE
+            WHEN Download >= 400 THEN 1 ELSE 
+                CASE
+                    WHEN Download >= 350 THEN 2 ELSE 0
+                END
+        END
+    ) 'nivelFalhaDownload'
+FROM registroColunar
+GROUP BY idServidor, MomentoRegistro;
+
+
 -- FIM DO CÓDIGO PARA VIEW-------------------------------------------------------------------------------------------------------------------------------------------
 
 -- Selects de Teste
+
+--FALHAS AGRUPADOS POR SEMANA
+SELECT `idServidor`, 
+    `MomentoRegistro`, 
+    SUM(nivelFalhaCPU = 1) AS QuantFalhasCPU,
+    SUM(nivelFalhaMemoria = 1) AS QuantFalhasMemoria,
+    SUM(nivelFalhaDisco = 1) AS QuantFalhasDisco,
+    SUM(nivelFalhaUpload = 1) AS QuantFalhasUpload,
+    SUM(nivelFalhaDownload = 1) AS QuantFalhasDownload
+FROM falhascolunas
+GROUP BY YEARWEEK(MomentoRegistro, 1);
+    
+--CRITICOS AGRUPADOS POR SEMANA
+SELECT `idServidor`, 
+    `MomentoRegistro`, 
+    SUM(nivelFalhaCPU = 2) AS QuantFalhasCPU,
+    SUM(nivelFalhaMemoria = 2) AS QuantFalhasMemoria,
+    SUM(nivelFalhaDisco = 2) AS QuantFalhasDisco,
+    SUM(nivelFalhaUpload = 2) AS QuantFalhasUpload,
+    SUM(nivelFalhaDownload = 2) AS QuantFalhasDownload
+FROM falhascolunas
+GROUP BY YEARWEEK(MomentoRegistro, 1);
+
 
 SELECT * FROM tabelaRegistros;
 
