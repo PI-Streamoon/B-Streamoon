@@ -1,3 +1,5 @@
+-- Active: 1685408949990@@localhost@3306@streamoon
+
 DROP USER 'StreamoonUser'@'%';
 -- DELETE FROM mysql.user where user = 'StreamoonUser';
 
@@ -291,3 +293,17 @@ LEFT JOIN componenteServidor cs ON r.fkComponenteServidor = cs.idComponenteServi
 LEFT JOIN componente c ON cs.fkComponente = c.idComponente
 LEFT JOIN unidadeMedida um ON c.fkUnidadeMedida = um.idUnidadeMedida
 ORDER BY um.nomeMedida, c.nome;
+
+
+CREATE VIEW situacaoServidor AS
+SELECT idServidor,
+    MomentoRegistro,
+    CASE 
+        WHEN nivelFalhaCPU = 1 OR nivelFalhaDisco = 1 THEN "Alerta" ELSE
+        CASE 
+            WHEN nivelFalhaCPU = 2 OR nivelFalhaDisco = 2 THEN "Critico"  ELSE "Normal"
+        END
+    END AS 'Status'
+    FROM falhascolunas;
+
+SELECT * FROM situacaoServidor;
