@@ -429,27 +429,44 @@ GROUP BY idServidor, MomentoRegistro;
 -- Selects de Teste
 
 --FALHAS AGRUPADOS POR SEMANA
-SELECT `idServidor`,
-    `MomentoRegistro`, 
+SELECT `idServidor`, 
+    DATE(MomentoRegistro), 
     SUM(nivelFalhaCPU = 1) AS QuantFalhasCPU,
     SUM(nivelFalhaMemoria = 1) AS QuantFalhasMemoria,
     SUM(nivelFalhaDisco = 1) AS QuantFalhasDisco,
     SUM(nivelFalhaUpload = 1) AS QuantFalhasUpload,
     SUM(nivelFalhaDownload = 1) AS QuantFalhasDownload
 FROM falhascolunas
-GROUP BY YEARWEEK(MomentoRegistro, 1);
+WHERE MomentoRegistro >= '1990-05-20' AND MomentoRegistro <= '2023-10-30'
+GROUP BY `idServidor`, DATE(MomentoRegistro);
 
 --CRITICOS AGRUPADOS POR SEMANA
 SELECT `idServidor`, 
-    `MomentoRegistro`, 
+    DATE(MomentoRegistro), 
     SUM(nivelFalhaCPU = 2) AS QuantFalhasCPU,
     SUM(nivelFalhaMemoria = 2) AS QuantFalhasMemoria,
     SUM(nivelFalhaDisco = 2) AS QuantFalhasDisco,
     SUM(nivelFalhaUpload = 2) AS QuantFalhasUpload,
     SUM(nivelFalhaDownload = 2) AS QuantFalhasDownload
 FROM falhascolunas
-GROUP BY YEARWEEK(MomentoRegistro, 1);
+WHERE MomentoRegistro >= '1990-05-20' AND MomentoRegistro <= '2023-10-30'
+GROUP BY `idServidor`, DATE(MomentoRegistro);
 
+SELECT idServidor,
+    DATE(MomentoRegistro),
+    SUM(nivelFalhaCPU = 1) AS QuantFalhasCPU,
+    SUM(nivelFalhaMemoria = 1) AS QuantFalhasMemoria,
+    SUM(nivelFalhaDisco = 1) AS QuantFalhasDisco,
+    SUM(nivelFalhaUpload = 1) AS QuantFalhasUpload,
+    SUM(nivelFalhaDownload = 1) AS QuantFalhasDownload,
+    SUM(nivelFalhaCPU = 2) AS QuantFalhasCriticoCPU,
+    SUM(nivelFalhaMemoria = 2) AS QuantFalhasCriticoMemoria,
+    SUM(nivelFalhaDisco = 2) AS QuantFalhasCriticoDisco,
+    SUM(nivelFalhaUpload = 2) AS QuantFalhasCriticoUpload,
+    SUM(nivelFalhaDownload = 2) AS QuantFalhasCriticoDownload
+    FROM falhascolunas
+    WHERE MomentoRegistro >= '2023-10-19 23:59:59' AND MomentoRegistro <= '2023-10-26 23:59:59'
+    GROUP BY idServidor, DATE(MomentoRegistro);
 
 SELECT * FROM tabelaRegistros;
 
