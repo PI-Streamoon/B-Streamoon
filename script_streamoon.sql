@@ -446,7 +446,7 @@ SELECT `idServidor`,
     SUM(nivelFalhaDisco = 1) AS QuantFalhasDisco,
     SUM(nivelFalhaUpload = 1) AS QuantFalhasUpload,
     SUM(nivelFalhaDownload = 1) AS QuantFalhasDownload
-FROM falhascolunas
+FROM falhasColunas
 WHERE MomentoRegistro >= '1990-05-20' AND MomentoRegistro <= '2023-10-30'
 GROUP BY `idServidor`, DATE(MomentoRegistro);
 
@@ -458,27 +458,26 @@ SELECT `idServidor`,
     SUM(nivelFalhaDisco = 2) AS QuantFalhasDisco,
     SUM(nivelFalhaUpload = 2) AS QuantFalhasUpload,
     SUM(nivelFalhaDownload = 2) AS QuantFalhasDownload
-FROM falhascolunas
+FROM falhasColunas
 WHERE MomentoRegistro >= '1990-05-20' AND MomentoRegistro <= '2023-10-30'
 GROUP BY `idServidor`, DATE(MomentoRegistro);
 
 SELECT idServidor,
-    DATE(MomentoRegistro),
+    MAX(MomentoRegistro),
+    SUM((nivelFalhaCPU = 1) + (nivelFalhaMemoria = 1) + (nivelFalhaDisco = 1) + (nivelFalhaUpload = 1) + (nivelFalhaDownload = 1)) AS TotalFalhas,
+    SUM((nivelFalhaCPU = 2) + (nivelFalhaMemoria = 2) + (nivelFalhaDisco = 2) + (nivelFalhaUpload = 2) + (nivelFalhaDownload = 2)) AS TotalFalhasCritic
+    FROM falhasColunas
+    WHERE MomentoRegistro >= '2023-10-19 23:59:59' AND MomentoRegistro <= '2023-10-29 23:59:59'
+    GROUP BY idServidor;
+
+ SELECT idServidor,
+    DATE_FORMAT(DATE(MomentoRegistro), "%d/%m/%Y") AS Dia,
     SUM(nivelFalhaCPU = 1) AS QuantFalhasCPU,
     SUM(nivelFalhaMemoria = 1) AS QuantFalhasMemoria,
-    SUM(nivelFalhaDisco = 1) AS QuantFalhasDisco,
-    SUM(nivelFalhaUpload = 1) AS QuantFalhasUpload,
-    SUM(nivelFalhaDownload = 1) AS QuantFalhasDownload,
-    SUM(nivelFalhaCPU = 2) AS QuantFalhasCriticoCPU,
-    SUM(nivelFalhaMemoria = 2) AS QuantFalhasCriticoMemoria,
-    SUM(nivelFalhaDisco = 2) AS QuantFalhasCriticoDisco,
-    SUM(nivelFalhaUpload = 2) AS QuantFalhasCriticoUpload,
-    SUM(nivelFalhaDownload = 2) AS QuantFalhasCriticoDownload
-    FROM falhascolunas
-    WHERE MomentoRegistro >= '2023-10-19 23:59:59' AND MomentoRegistro <= '2023-10-26 23:59:59'
-    GROUP BY idServidor, DATE(MomentoRegistro);
-
-SELECT * FROM tabelaRegistros;
+    SUM(nivelFalhaDisco = 1) AS QuantFalhasDisco
+    FROM falhasColunas
+    WHERE MomentoRegistro >= '2023-10-21 23:59:59' AND MomentoRegistro <= '2023-10-28 23:59:59' AND idServidor = 2222
+    GROUP BY Dia;
 
 SELECT
     MomentoRegistro,
@@ -545,3 +544,16 @@ select * from registro
     
 
 select * from registroColunar;
+
+CREATE VIEW situacaoServidor AS
+SELECT idServidor,
+    MomentoRegistro,
+    CASE 
+        WHEN nivelFalhaCPU = 1 OR nivelFalhaDisco = 1 THEN "Alerta" ELSE
+        CASE 
+            WHEN nivelFalhaCPU = 2 OR nivelFalhaDisco = 2 THEN "Critico"  ELSE "Normal"
+        END
+    END AS 'Status'
+    FROM falhasColunas;
+
+SELECT * FROM situacaoServidor;
