@@ -429,7 +429,15 @@ SELECT idServidor, MomentoRegistro,
                     WHEN Download >= 350 THEN 2 ELSE 0
                 END
         END
-    ) 'nivelFalhaDownload'
+    ) 'nivelFalhaDownload',
+     MAX(
+        CASE
+            WHEN FrequenciaCPU > 2100 THEN 1 ELSE 
+                CASE
+                    WHEN FrequenciaCPU > 1400 THEN 2 ELSE 0
+                END
+        END
+    ) 'nivelFalhaFreqCpu'
 FROM registroColunar
 GROUP BY idServidor, MomentoRegistro;
 
