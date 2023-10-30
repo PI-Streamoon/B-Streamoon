@@ -447,16 +447,12 @@ GROUP BY idServidor, MomentoRegistro;
 -- Selects de Teste
 
 -- FALHAS AGRUPADOS POR SEMANA
-SELECT `idServidor`, 
-    DATE(MomentoRegistro), 
-    SUM(nivelFalhaCPU = 1) AS QuantFalhasCPU,
-    SUM(nivelFalhaMemoria = 1) AS QuantFalhasMemoria,
-    SUM(nivelFalhaDisco = 1) AS QuantFalhasDisco,
-    SUM(nivelFalhaUpload = 1) AS QuantFalhasUpload,
-    SUM(nivelFalhaDownload = 1) AS QuantFalhasDownload
-FROM falhasColunas
-WHERE MomentoRegistro >= '1990-05-20' AND MomentoRegistro <= '2023-10-30'
-GROUP BY `idServidor`, DATE(MomentoRegistro);
+SELECT idServidor,
+    SUM((nivelFalhaCPU = 1) + (nivelFalhaMemoria = 1) + (nivelFalhaDisco = 1) + (nivelFalhaUpload = 1) + (nivelFalhaDownload = 1) + (nivelFalhaFreqCpu = 1)) AS TotalFalhas,
+    SUM((nivelFalhaCPU = 2) + (nivelFalhaMemoria = 2) + (nivelFalhaDisco = 2) + (nivelFalhaUpload = 2) + (nivelFalhaDownload = 2) + (nivelFalhaFreqCpu = 2)) AS TotalFalhasCriticas
+    FROM falhascolunas
+WHERE MomentoRegistro >= '2023-10-23 23:59:59' AND MomentoRegistro <= '2023-10-30 23:59:59'
+GROUP BY idServidor;
 
 -- CRITICOS AGRUPADOS POR SEMANA
 SELECT `idServidor`, 
@@ -467,16 +463,19 @@ SELECT `idServidor`,
     SUM(nivelFalhaUpload = 2) AS QuantFalhasUpload,
     SUM(nivelFalhaDownload = 2) AS QuantFalhasDownload
 FROM falhasColunas
-WHERE MomentoRegistro >= '1990-05-20' AND MomentoRegistro <= '2023-10-30'
+WHERE MomentoRegistro >= '1990-05-20' AND MomentoRegistro <= '2023-10-31'
 GROUP BY `idServidor`, DATE(MomentoRegistro);
 
 SELECT idServidor,
-    MAX(MomentoRegistro),
-    SUM((nivelFalhaCPU = 1) + (nivelFalhaMemoria = 1) + (nivelFalhaDisco = 1) + (nivelFalhaUpload = 1) + (nivelFalhaDownload = 1)) AS TotalFalhas,
-    SUM((nivelFalhaCPU = 2) + (nivelFalhaMemoria = 2) + (nivelFalhaDisco = 2) + (nivelFalhaUpload = 2) + (nivelFalhaDownload = 2)) AS TotalFalhasCritic
-    FROM falhasColunas
-    WHERE MomentoRegistro >= '2023-10-19 23:59:59' AND MomentoRegistro <= '2023-10-29 23:59:59'
-    GROUP BY idServidor;
+    DATE_FORMAT(DATE(MomentoRegistro), "%d/%m/%Y") AS Dia,
+    SUM((nivelFalhaCPU = 1) + (nivelFalhaMemoria = 1) + (nivelFalhaDisco = 1) + (nivelFalhaUpload = 1) + (nivelFalhaDownload = 1) + (nivelFalhaFreqCpu = 1)) AS TotalFalhas,
+    SUM((nivelFalhaCPU = 2) + (nivelFalhaMemoria = 2) + (nivelFalhaDisco = 2) + (nivelFalhaUpload = 2) + (nivelFalhaDownload = 2) + (nivelFalhaFreqCpu = 2)) AS TotalFalhasCriticas
+    FROM falhascolunas
+    WHERE MomentoRegistro >= '2023-10-05 23:59:59' AND MomentoRegistro <= '2023-10-30 23:59:59' AND idServidor = ${idServidor}
+GROUP BY idServidor, Dia;
+
+SELECT COUNT(idServidor) FROM falhascolunas WHERE MomentoRegistro >= '2023-10-05 23:59:59' AND MomentoRegistro <= '2023-10-30 23:59:59' AND idServidor = 2222
+AND `nivelFalhaFreqCpu` = 1;
 
  SELECT idServidor,
     DATE_FORMAT(DATE(MomentoRegistro), "%d/%m/%Y") AS Dia,
