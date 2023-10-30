@@ -460,7 +460,7 @@ SELECT idServidor,
     SUM((nivelFalhaCPU = 1) + (nivelFalhaMemoria = 1) + (nivelFalhaDisco = 1) + (nivelFalhaUpload = 1) + (nivelFalhaDownload = 1) + (nivelFalhaFreqCpu = 1)) AS TotalFalhas,
     SUM((nivelFalhaCPU = 2) + (nivelFalhaMemoria = 2) + (nivelFalhaDisco = 2) + (nivelFalhaUpload = 2) + (nivelFalhaDownload = 2) + (nivelFalhaFreqCpu = 2)) AS TotalFalhasCriticas
     FROM falhasColunas
-    WHERE MomentoRegistro >= '2023-10-05 23:59:59' AND MomentoRegistro <= '2023-10-30 23:59:59' AND idServidor = ${idServidor}
+    WHERE MomentoRegistro >= '2023-10-05 23:59:59' AND MomentoRegistro <= '2023-10-30 23:59:59' AND idServidor = 2222
 GROUP BY idServidor, Dia;
 
 SELECT COUNT(idServidor) FROM falhasColunas WHERE MomentoRegistro >= '2023-10-05 23:59:59' AND MomentoRegistro <= '2023-10-30 23:59:59' AND idServidor = 2222
