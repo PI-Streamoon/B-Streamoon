@@ -1,6 +1,6 @@
 -- Active: 1698205327640@@127.0.0.1@3306@streamoon
 
---DROP USER 'StreamoonUser'@'%';
+-- DROP USER 'StreamoonUser'@'%';
 
 DELETE FROM mysql.user WHERE user = 'StreamoonUser';
 
