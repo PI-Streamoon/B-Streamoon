@@ -1,13 +1,4 @@
 -- Active: 1698205327640@@127.0.0.1@3306@streamoon
-
-DELETE FROM mysql.user WHERE user = 'StreamoonUser';
-
-CREATE USER 'StreamoonUser'@'%' IDENTIFIED BY 'Moon2023';
-
-GRANT ALL PRIVILEGES ON streamoon.* TO 'StreamoonUser'@'%';
-
-FLUSH PRIVILEGES;
-
 DROP DATABASE IF EXISTS streamoon;
 
 CREATE DATABASE streamoon;
@@ -562,3 +553,11 @@ SELECT idServidor,
     FROM falhasColunas;
 
 SELECT * FROM situacaoServidor;
+
+DELETE FROM mysql.user WHERE user = 'StreamoonUser';
+
+CREATE USER 'StreamoonUser'@'%' IDENTIFIED BY 'Moon2023';
+
+GRANT ALL PRIVILEGES ON streamoon.* TO 'StreamoonUser'@'%';
+
+FLUSH PRIVILEGES;
