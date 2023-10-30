@@ -448,7 +448,7 @@ GROUP BY idServidor, MomentoRegistro;
 SELECT idServidor,
     SUM((nivelFalhaCPU = 1) + (nivelFalhaMemoria = 1) + (nivelFalhaDisco = 1) + (nivelFalhaUpload = 1) + (nivelFalhaDownload = 1) + (nivelFalhaFreqCpu = 1)) AS TotalFalhas,
     SUM((nivelFalhaCPU = 2) + (nivelFalhaMemoria = 2) + (nivelFalhaDisco = 2) + (nivelFalhaUpload = 2) + (nivelFalhaDownload = 2) + (nivelFalhaFreqCpu = 2)) AS TotalFalhasCriticas
-    FROM falhascolunas
+    FROM falhasColunas
 WHERE MomentoRegistro >= '2023-10-23 23:59:59' AND MomentoRegistro <= '2023-10-30 23:59:59'
 GROUP BY idServidor;
 
@@ -468,11 +468,11 @@ SELECT idServidor,
     DATE_FORMAT(DATE(MomentoRegistro), "%d/%m/%Y") AS Dia,
     SUM((nivelFalhaCPU = 1) + (nivelFalhaMemoria = 1) + (nivelFalhaDisco = 1) + (nivelFalhaUpload = 1) + (nivelFalhaDownload = 1) + (nivelFalhaFreqCpu = 1)) AS TotalFalhas,
     SUM((nivelFalhaCPU = 2) + (nivelFalhaMemoria = 2) + (nivelFalhaDisco = 2) + (nivelFalhaUpload = 2) + (nivelFalhaDownload = 2) + (nivelFalhaFreqCpu = 2)) AS TotalFalhasCriticas
-    FROM falhascolunas
+    FROM falhasColunas
     WHERE MomentoRegistro >= '2023-10-05 23:59:59' AND MomentoRegistro <= '2023-10-30 23:59:59' AND idServidor = ${idServidor}
 GROUP BY idServidor, Dia;
 
-SELECT COUNT(idServidor) FROM falhascolunas WHERE MomentoRegistro >= '2023-10-05 23:59:59' AND MomentoRegistro <= '2023-10-30 23:59:59' AND idServidor = 2222
+SELECT COUNT(idServidor) FROM falhasColunas WHERE MomentoRegistro >= '2023-10-05 23:59:59' AND MomentoRegistro <= '2023-10-30 23:59:59' AND idServidor = 2222
 AND `nivelFalhaFreqCpu` = 1;
 
  SELECT idServidor,
