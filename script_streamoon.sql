@@ -47,7 +47,7 @@ CREATE TABLE
         CONSTRAINT `fk_Servidor_Origem` FOREIGN KEY (`fkOrigem`) REFERENCES servidor(`idServidor`) ON DELETE NO ACTION ON UPDATE NO ACTION,
         CONSTRAINT `fk_Servidor_Locais1` FOREIGN KEY (`fkLocais`) REFERENCES locais (`idLocais`) ON DELETE NO ACTION ON UPDATE NO ACTION
     ) AUTO_INCREMENT = 2222;
-
+        
 CREATE TABLE
     IF NOT EXISTS unidadeMedida (
         idUnidadeMedida INT NOT NULL AUTO_INCREMENT,
@@ -93,10 +93,24 @@ CREATE TABLE
         ),
         CONSTRAINT `fk_Registro_ComponenteServidor1` FOREIGN KEY (`fkComponenteServidor`) REFERENCES componenteServidor (`idComponenteServidor`) ON DELETE NO ACTION ON UPDATE NO ACTION
     ) AUTO_INCREMENT = 100000;
-
+    
+-- Inserindo tabela para os chamados, Alteração feita por: Kevyn (07/11/2023)
+CREATE TABLE
+	IF NOT EXISTS chamado (
+		idChamado int primary key auto_increment,
+        fkServidor int,
+        fkRegistro decimal(5,2),
+        horarioAbertura datetime,
+        tempLocal decimal(4,2),
+        CONSTRAINT `fk_servidor_componenteServidor` FOREIGN KEY (`fkServidor`) REFERENCES registro(`fkComponenteServidor`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+        CONSTRAINT `fk_idhamado_idRegistro` FOREIGN KEY (`idChamado`) REFERENCES registro(`idRegistro`) ON DELETE NO ACTION ON UPDATE NO ACTION
+        );
+        
 -- Criação das Views
 
 SELECT * FROM registro;
+
+SELECT * FROM chamado;
 
 CREATE VIEW
     tabelaRegistros AS
