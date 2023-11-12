@@ -1,12 +1,4 @@
 -- Active: 1685408949990@@localhost@3306@streamoon
-
-DROP USER 'StreamoonUser'@'%';
--- DELETE FROM mysql.user where user = 'StreamoonUser';
-
-CREATE USER 'StreamoonUser'@'%' IDENTIFIED BY 'Moon2023';
-GRANT ALL PRIVILEGES ON streamoon.* TO 'StreamoonUser'@'%';
-FLUSH PRIVILEGES;
-
 DROP DATABASE IF EXISTS streamoon;
 CREATE database streamoon;
 USE streamoon;
@@ -89,18 +81,42 @@ CREATE TABLE IF NOT EXISTS componenteServidor (
         ON DELETE NO ACTION ON UPDATE NO ACTION
 )  AUTO_INCREMENT=1;
 
-CREATE TABLE IF NOT EXISTS registro (
-  `idRegistro` INT NOT NULL auto_increment,
-  `registro` INT NULL,
-  `dtHora` DATETIME NULL,
-  `fkComponenteServidor` INT NOT NULL,
-  PRIMARY KEY (`idRegistro`, `fkComponenteServidor`),
-  CONSTRAINT `fk_Registro_ComponenteServidor1`
-    FOREIGN KEY (`fkComponenteServidor`)
-    REFERENCES componenteServidor (`idComponenteServidor`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-    auto_increment = 100000;
+CREATE TABLE
+    IF NOT EXISTS registro (
+        `idRegistro` INT NOT NULL AUTO_INCREMENT,
+        `registro` DOUBLE NULL,
+        `dtHora` DATETIME NULL,
+        `fkComponenteServidor` INT NOT NULL,
+        PRIMARY KEY (
+            `idRegistro`,
+            `fkComponenteServidor`
+        ),
+        CONSTRAINT `fk_Registro_ComponenteServidor1` FOREIGN KEY (`fkComponenteServidor`) REFERENCES componenteServidor (`idComponenteServidor`) ON DELETE NO ACTION ON UPDATE NO ACTION
+    ) AUTO_INCREMENT = 100000;
+    
+-- Inserindo tabela para os chamados, Alteração feita por: Kevyn (07/11/2023)
+CREATE TABLE
+	IF NOT EXISTS chamado (
+		idChamado int primary key auto_increment,
+        fkServidor int,
+        fkRegistro decimal(5,2),
+        horarioAbertura datetime,
+        tempLocal decimal(4,2),
+        CONSTRAINT `fk_servidor_componenteServidor` FOREIGN KEY (`fkServidor`) REFERENCES registro(`fkComponenteServidor`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+        CONSTRAINT `fk_idhamado_idRegistro` FOREIGN KEY (`idChamado`) REFERENCES registro(`idRegistro`) ON DELETE NO ACTION ON UPDATE NO ACTION
+        );
+        
+CREATE TABLE
+    IF NOT EXISTS dadosec2 (
+        idEc2 INT PRIMARY KEY AUTO_INCREMENT,
+        tipo VARCHAR(20),
+        `vcpu` INT,
+        `preco` FLOAT,
+        `so` VARCHAR(20),
+        `ram` FLOAT,
+        `fkLocal` INT,
+        CONSTRAINT `fk_local_ec2` FOREIGN KEY (`fkLocal`) REFERENCES locais(`idLocais`) ON DELETE NO ACTION ON UPDATE NO ACTION
+    );        
 
 -- Criação das Views
 select * from registro;
@@ -152,10 +168,30 @@ FROM
         
 -- Inserção de dados
 -- Tabela empresa
-INSERT INTO empresa (idEmpresa, nome, cnpj, localidade)
-VALUES
-  (null, 'HBOMax', '12345678901234', 'Centro de São Paulo'),
-  (null, 'Netflix', '98765432101234', 'São Jorge da Serra - Perdizes');
+
+INSERT INTO
+    empresa (
+        idEmpresa,
+        nome,
+        cnpj,
+        localidade
+    )
+VALUES (
+        NULL,
+        'HBOMax',
+        '12345678901234',
+        'Centro de São Paulo'
+    ), (
+        NULL,
+        'Netflix',
+        '98765432101234',
+        'São Jorge da Serra - Perdizes'
+    ),(
+        1,
+        'AWS',
+        '23412247000110',
+        'global'
+    );
 
 -- Tabela usuario
 INSERT INTO usuario (idUsuario, fkEmpresa, fkAdmin, nome, senha, cpf, email)
@@ -306,4 +342,14 @@ SELECT idServidor,
     END AS 'Status'
     FROM falhascolunas;
 
-SELECT * FROM situacaoServidor;
+SELECT * FROM dadosec2;
+
+-- CASO DE PROBLEMA NA CRIAÇÃO DO USUÁRIO DESCOMENTAR A PROXIMA LINHA 
+-- DROP USER 'StreamoonUser'@'%';
+DELETE FROM mysql.user WHERE user = 'StreamoonUser';
+
+CREATE USER 'StreamoonUser'@'%' IDENTIFIED BY 'Moon2023';
+
+GRANT ALL PRIVILEGES ON streamoon.* TO 'StreamoonUser'@'%';
+
+FLUSH PRIVILEGES;
