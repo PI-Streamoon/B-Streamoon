@@ -390,54 +390,53 @@ INNER JOIN servidor ON componenteServidor.`fkServidor` = servidor.`idServidor`
 INNER JOIN componente ON componente.`idComponente` = componenteServidor.`fkComponente`
 GROUP BY idServidor, MomentoRegistro;
 
-
 CREATE VIEW falhasColunas AS
 SELECT idServidor, MomentoRegistro,
     MAX(
         CASE
-            WHEN CPU >= 90 THEN 1 ELSE 
+            WHEN CPU >= 90 THEN 2 ELSE 
                 CASE
-                    WHEN CPU >= 70 THEN 2 ELSE 0
+                    WHEN CPU >= 70 THEN 1 ELSE NULL
                 END
         END
     ) 'nivelFalhaCPU',
     MAX(
         CASE
-            WHEN Memoria >= 90 THEN 1 ELSE 
+            WHEN Memoria >= 90 THEN 2 ELSE 
                 CASE
-                    WHEN Memoria >= 70 THEN 2 ELSE 0
+                    WHEN Memoria >= 70 THEN 1 ELSE NULL
                 END
         END
     ) 'nivelFalhaMemoria',
     MAX(
         CASE
-            WHEN Disco >= 90 THEN 1 ELSE 
+            WHEN Disco >= 90 THEN 2 ELSE 
                 CASE
-                    WHEN Disco >= 70 THEN 2 ELSE 0
+                    WHEN Disco >= 70 THEN 1 ELSE NULL
                 END
         END
     ) 'nivelFalhaDisco',
     MAX(
         CASE
-            WHEN Upload >= 100 THEN 1 ELSE 
+            WHEN Upload >= 100 THEN 2 ELSE 
                 CASE
-                    WHEN Upload >= 80 THEN 2 ELSE 0
+                    WHEN Upload >= 80 THEN 1 ELSE NULL
                 END
         END
     ) 'nivelFalhaUpload',
     MAX(
         CASE
-            WHEN Download >= 400 THEN 1 ELSE 
+            WHEN Download >= 1000 THEN 2 ELSE 
                 CASE
-                    WHEN Download >= 350 THEN 2 ELSE 0
+                    WHEN Download >= 550 THEN 1 ELSE NULL
                 END
         END
     ) 'nivelFalhaDownload',
      MAX(
         CASE
-            WHEN FrequenciaCPU > 2100 THEN 1 ELSE 
+            WHEN FrequenciaCPU > 2100 THEN 2 ELSE 
                 CASE
-                    WHEN FrequenciaCPU > 1400 THEN 2 ELSE 0
+                    WHEN FrequenciaCPU > 1400 THEN 1 ELSE NULL
                 END
         END
     ) 'nivelFalhaFreqCpu'
