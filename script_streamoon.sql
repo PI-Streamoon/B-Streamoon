@@ -1,4 +1,4 @@
--- Active: 1698667238418@@127.0.0.1@3306@streamoon
+-- Active: 1685408949990@@localhost@3306@streamoon
 DROP DATABASE IF EXISTS streamoon;
 
 CREATE DATABASE streamoon;
@@ -106,6 +106,18 @@ CREATE TABLE
         CONSTRAINT `fk_idhamado_idRegistro` FOREIGN KEY (`idChamado`) REFERENCES registro(`idRegistro`) ON DELETE NO ACTION ON UPDATE NO ACTION
         );
         
+CREATE TABLE
+    IF NOT EXISTS dadosec2 (
+        idEc2 INT PRIMARY KEY AUTO_INCREMENT,
+        tipo VARCHAR(20),
+        `vcpu` INT,
+        `preco` FLOAT,
+        `so` VARCHAR(20),
+        `ram` FLOAT,
+        `fkLocal` INT,
+        CONSTRAINT `fk_local_ec2` FOREIGN KEY (`fkLocal`) REFERENCES locais(`idLocais`) ON DELETE NO ACTION ON UPDATE NO ACTION
+    );  
+
 -- Criação das Views
 
 SELECT * FROM registro;
@@ -171,6 +183,11 @@ VALUES (
         'Netflix',
         '98765432101234',
         'São Jorge da Serra - Perdizes'
+    ),(
+        1,
+        'AWS',
+        '23412247000110',
+        'global'
     );
 
 -- Tabela usuario
@@ -578,7 +595,12 @@ CREATE TABLE Chamados (
     responsavel VARCHAR(100)
 ); 
 
+SELECT * FROM dadosec2;
+
 -- DELETE FROM mysql.user WHERE user = 'StreamoonUser';
+
+-- CASO DE PROBLEMA NA CRIAÇÃO DO USUÁRIO DESCOMENTAR A PROXIMA LINHA 
+DROP USER 'StreamoonUser'@'%';
 
 CREATE USER 'StreamoonUser'@'%' IDENTIFIED BY 'Moon2023';
 
