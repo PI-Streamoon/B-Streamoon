@@ -1,4 +1,4 @@
--- Active: 1698205327640@@127.0.0.1@3306@streamoon
+-- Active: 1698667238418@@127.0.0.1@3306@streamoon
 DROP DATABASE IF EXISTS streamoon;
 
 CREATE DATABASE streamoon;
@@ -567,7 +567,18 @@ SELECT idServidor,
 
 SELECT * FROM situacaoServidor;
 
-DELETE FROM mysql.user WHERE user = 'StreamoonUser';
+CREATE TABLE Chamados (
+    idChamado INT PRIMARY KEY AUTO_INCREMENT,
+    titulo VARCHAR(150),
+    descricao VARCHAR(250),
+    statusChamado VARCHAR(50),
+    dataAbertura DATETIME,
+    isAberto BOOLEAN,
+    prioridade VARCHAR(20),
+    responsavel VARCHAR(100)
+); 
+
+-- DELETE FROM mysql.user WHERE user = 'StreamoonUser';
 
 CREATE USER 'StreamoonUser'@'%' IDENTIFIED BY 'Moon2023';
 
