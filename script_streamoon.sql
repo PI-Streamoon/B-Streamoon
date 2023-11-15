@@ -1,4 +1,4 @@
--- Active: 1685408949990@@localhost@3306@streamoon
+-- Active: 1698205327640@@127.0.0.1@3306@phpmyadmin
 DROP DATABASE IF EXISTS streamoon;
 
 CREATE DATABASE streamoon;
@@ -261,7 +261,8 @@ INSERT INTO
         fkUnidadeMedida,
         nome
     )
-VALUES (NULL, 4, 'CPU'), (NULL, 1, 'FrequenciaCPU'),(NULL, 4, 'Memoria'), (NULL, 2, 'MemoriaUsada'), (NULL, 2, 'MemoriaTotal'), (NULL, 4, 'Disco'), (NULL, 2, 'DiscoEntrada'), (NULL, 2, 'DiscoSaida'), (NULL, 3, 'Upload'), (NULL, 3, 'Download');
+VALUES (NULL, 4, 'CPU'), (NULL, 1, 'FrequenciaCPU'),(NULL, 4, 'Memoria'), (NULL, 2, 'MemoriaUsada'), (NULL, 2, 'MemoriaTotal'), (NULL, 4, 'Disco'), (NULL, 2, 'DiscoEntrada'), (NULL, 2, 'DiscoSaida'), (NULL, 3, 'Upload'), (NULL, 3, 'Download')
+,(NULL, 4, 'CPU'), (NULL, 1, 'FrequenciaCPU'),(NULL, 4, 'Memoria'), (NULL, 2, 'MemoriaUsada'), (NULL, 2, 'MemoriaTotal'), (NULL, 4, 'Disco'), (NULL, 2, 'DiscoEntrada'), (NULL, 2, 'DiscoSaida'), (NULL, 3, 'Upload'), (NULL, 3, 'Download');
 
 SELECT * FROM componente;
 
@@ -273,7 +274,8 @@ INSERT INTO
         fkServidor,
         fkComponente
     )
-VALUES (NULL, 2222, 100), (NULL, 2222, 101), (NULL, 2222, 102), (NULL, 2222, 103), (NULL, 2222, 104), (NULL, 2222, 105), (NULL, 2222, 106), (NULL, 2222, 107), (NULL, 2222, 108), (NULL, 2222, 109);
+VALUES (NULL, 2222, 100), (NULL, 2222, 101), (NULL, 2222, 102), (NULL, 2222, 103), (NULL, 2222, 104), (NULL, 2222, 105), (NULL, 2222, 106), (NULL, 2222, 107), (NULL, 2222, 108), (NULL, 2222, 109)
+,(NULL, 2223, 110), (NULL, 2223, 111), (NULL, 2223, 112), (NULL, 2223, 113), (NULL, 2223, 114), (NULL, 2223, 115), (NULL, 2223, 116), (NULL, 2223, 117), (NULL, 2223, 118), (NULL, 2223, 119);
 
 -- Tabela registro
 
