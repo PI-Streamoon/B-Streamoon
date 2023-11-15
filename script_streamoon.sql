@@ -595,7 +595,17 @@ CREATE TABLE Chamados (
     responsavel VARCHAR(100)
 ); 
 
-SELECT * FROM dadosec2;
+SELECT 
+    `idEc2` id,
+    `tipo`,
+    `so`,
+    `vcpu`,
+    `ram`,
+    `preco`,
+    `descricao`
+     FROM dadosec2 JOIN locais 
+     ON `idLocais` = `fkLocal` 
+     WHERE `fkLocal` = 102 LIMIT 9999; 
 -- DELETE FROM mysql.user WHERE user = 'StreamoonUser';
 
 -- CASO DE PROBLEMA NA CRIAÇÃO DO USUÁRIO DESCOMENTAR A PROXIMA LINHA 
