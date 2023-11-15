@@ -206,18 +206,18 @@ VALUES (
         NULL,
         484018,
         NULL,
-        'Fernando Brandão',
+        'Carl',
         '$2a$10$.jeLR4RKBa6ML96w0lmI5u8rUggbfyfq6IDeAhHtir10nyTasv5K2',
         '12345678901',
-        'brandao@gmail.com'
+        'carl@gmail.com' -- 203457
     ), (
         NULL,
         484019,
         1,
-        'Marise',
+        'suzy',
         '$2a$10$i4K5pWN.1cs/5/Z9lLJ9r.VkS1W8Z/pjK5E5TMAnqgfIfSyR1RU0a',
         '12345678902',
-        'marise@gmail.com'
+        'suzy@gmail.com' -- senha456293
     );
 
 -- Tabela locais
@@ -596,11 +596,10 @@ CREATE TABLE Chamados (
 ); 
 
 SELECT * FROM dadosec2;
-
 -- DELETE FROM mysql.user WHERE user = 'StreamoonUser';
 
 -- CASO DE PROBLEMA NA CRIAÇÃO DO USUÁRIO DESCOMENTAR A PROXIMA LINHA 
-DROP USER 'StreamoonUser'@'%';
+-- DROP USER 'StreamoonUser'@'%';
 
 CREATE USER 'StreamoonUser'@'%' IDENTIFIED BY 'Moon2023';
 
