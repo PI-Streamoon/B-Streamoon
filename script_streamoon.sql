@@ -118,6 +118,15 @@ CREATE TABLE
         CONSTRAINT `fk_local_ec2` FOREIGN KEY (`fkLocal`) REFERENCES locais(`idLocais`) ON DELETE NO ACTION ON UPDATE NO ACTION
     );  
 
+CREATE TABLE 
+    IF NOT EXISTS metricas (
+        `idMetrica` INT PRIMARY KEY AUTO_INCREMENT,
+        `maxValorNormal` DOUBLE NULL,
+        `maxValorAlerta` DOUBLE NULL,
+        `fkComponenteServidor` INT,
+        CONSTRAINT `fkComponenteServidor` FOREIGN KEY (`fkComponenteServidor`) REFERENCES componenteServidor(`idComponenteServidor`) ON DELETE NO ACTION ON UPDATE NO ACTION
+    );
+
 -- Criação das Views
 
 SELECT * FROM registro;
@@ -297,6 +306,21 @@ VALUES (
         '2023-08-02 15:30:00',
         2
     );
+
+-- Tabela metricas
+INSERT INTO 
+    metricas (
+        maxValorNormal, 
+        maxValorAlerta, 
+        fkComponenteServidor
+        ) 
+    VALUES 
+        (70, 90, 1),
+        (1401, 2099, 2),
+        (70, 90, 3),
+        (70, 90, 6),
+        (80, 100, 9),
+        (550, 1000, 10);
 
 -- CÓDIGO DA CRIAÇÃO DA VIEW PARA VISUALIZAÇÃO DOS DADOS EM TABELA --------------------------------------------------------------------------------------------
 
