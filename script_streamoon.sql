@@ -46,6 +46,16 @@ CREATE TABLE
         CONSTRAINT `fk_Servidor_Origem` FOREIGN KEY (`fkOrigem`) REFERENCES servidor(`idServidor`) ON DELETE NO ACTION ON UPDATE NO ACTION,
         CONSTRAINT `fk_Servidor_Locais1` FOREIGN KEY (`fkLocais`) REFERENCES locais (`idLocais`) ON DELETE NO ACTION ON UPDATE NO ACTION
     ) AUTO_INCREMENT = 2222;
+
+CREATE TABLE
+	IF NOT EXISTS terminal (
+	idTerminal INT NOT NULL AUTO_INCREMENT,
+	comando VARCHAR(255) NOT NULL,
+	retorno TEXT NOT NULL,
+	fkServidor INT,
+	PRIMARY KEY(idTerminal),
+	CONSTRAINT `fk_Terminal_Servidor` FOREIGN KEY (`fkTerminal`) REFERENCES servidor(`idServidor`) ON DELETE NO ACTION ON UPDATE NO ACTION
+	) AUTO_INCREMENT = 1;
         
 CREATE TABLE
     IF NOT EXISTS unidadeMedida (
