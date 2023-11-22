@@ -136,6 +136,15 @@ CREATE TABLE
         CONSTRAINT `fkComponenteServidor` FOREIGN KEY (`fkComponenteServidor`) REFERENCES componenteServidor(`idComponenteServidor`) ON DELETE NO ACTION ON UPDATE NO ACTION
     );
 
+CREATE TABLE 
+	IF NOT EXISTS alertasSlack(
+    idAlerta int primary key auto_increment,
+    descricao varchar(50),
+    fkComponente int,
+    isAnalista tinyint,
+    constraint `fk_componente` foreign key (fkComponente) references componente(idComponente) ON DELETE NO ACTION ON UPDATE NO ACTION
+    );
+
 -- Criação das Views
 
 SELECT * FROM registro;
