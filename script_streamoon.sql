@@ -1,18 +1,17 @@
--- Active: 1698205327640@@127.0.0.1@3306@phpmyadmin
+-- Active: 1698205327640@@127.0.0.1@3306@streamoon
 DROP DATABASE IF EXISTS streamoon;
 
 CREATE DATABASE streamoon;
 
 USE streamoon;
 
-CREATE TABLE
-    IF NOT EXISTS empresa (
+CREATE TABLE IF NOT EXISTS empresa (
         idEmpresa INT NOT NULL AUTO_INCREMENT,
         nome VARCHAR(45) NULL,
         cnpj CHAR(14) NULL,
         localidade VARCHAR(45) NULL,
         PRIMARY KEY (idEmpresa)
-    ) AUTO_INCREMENT = 484018;
+) AUTO_INCREMENT = 484018;
 
 CREATE TABLE
     IF NOT EXISTS usuario (
@@ -261,9 +260,7 @@ INSERT INTO
         fkUnidadeMedida,
         nome
     )
-VALUES (NULL, 4, 'CPU'), (NULL, 1, 'FrequenciaCPU'),(NULL, 4, 'Memoria'), (NULL, 2, 'MemoriaUsada'), (NULL, 2, 'MemoriaTotal'), (NULL, 4, 'Disco'), (NULL, 2, 'DiscoEntrada'), (NULL, 2, 'DiscoSaida'), (NULL, 3, 'Upload'), (NULL, 3, 'Download')
-,(NULL, 4, 'CPU'), (NULL, 1, 'FrequenciaCPU'),(NULL, 4, 'Memoria'), (NULL, 2, 'MemoriaUsada'), (NULL, 2, 'MemoriaTotal'), (NULL, 4, 'Disco'), (NULL, 2, 'DiscoEntrada'), (NULL, 2, 'DiscoSaida'), (NULL, 3, 'Upload'), (NULL, 3, 'Download');
-
+VALUES (NULL, 4, 'CPU'), (NULL, 1, 'FrequenciaCPU'),(NULL, 4, 'Memoria'), (NULL, 2, 'MemoriaUsada'), (NULL, 2, 'MemoriaTotal'), (NULL, 4, 'Disco'), (NULL, 2, 'DiscoEntrada'), (NULL, 2, 'DiscoSaida'), (NULL, 3, 'Upload'), (NULL, 3, 'Download');
 SELECT * FROM componente;
 
 -- Tabela componenteServidor
@@ -275,7 +272,7 @@ INSERT INTO
         fkComponente
     )
 VALUES (NULL, 2222, 100), (NULL, 2222, 101), (NULL, 2222, 102), (NULL, 2222, 103), (NULL, 2222, 104), (NULL, 2222, 105), (NULL, 2222, 106), (NULL, 2222, 107), (NULL, 2222, 108), (NULL, 2222, 109)
-,(NULL, 2223, 110), (NULL, 2223, 111), (NULL, 2223, 112), (NULL, 2223, 113), (NULL, 2223, 114), (NULL, 2223, 115), (NULL, 2223, 116), (NULL, 2223, 117), (NULL, 2223, 118), (NULL, 2223, 119);
+,(NULL, 2223, 100), (NULL, 2223, 101), (NULL, 2223, 102), (NULL, 2223, 103), (NULL, 2223, 104), (NULL, 2223, 105), (NULL, 2223, 106), (NULL, 2223, 107), (NULL, 2223, 108), (NULL, 2223, 109);
 
 -- Tabela registro
 
@@ -348,6 +345,7 @@ EXECUTE stmt;
 -- Executa o statement
 
 DEALLOCATE PREPARE stmt;
+
 
 CREATE VIEW registroColunar AS
 SELECT
@@ -508,6 +506,31 @@ AND `nivelFalhaFreqCpu` = 1;
     GROUP BY Dia;
 
 SELECT
+    idServidor,
+    MomentoRegistro,
+    nivelFalhaCPU AS CPU,
+    nivelFalhaMemoria AS Memoria,
+    nivelFalhaDisco AS Disco,
+    nivelFalhaUpload AS Upload,
+    nivelFalhaDownload AS Download
+FROM (
+    SELECT
+        idServidor,
+        MomentoRegistro,
+        nivelFalhaCPU,
+        nivelFalhaMemoria,
+        nivelFalhaDisco,
+        nivelFalhaUpload,
+        nivelFalhaDownload,
+        ROW_NUMBER() OVER (PARTITION BY idServidor ORDER BY MomentoRegistro DESC) AS rn
+    FROM falhasColunas
+) AS ranked
+WHERE rn = 1;
+
+
+SELECT MAX(MomentoRegistro) AS MomentoRegistro FROM falhasColunas WHERE `idServidor` = 2222;
+
+SELECT
     MomentoRegistro,
     Registro,
     Componente
@@ -611,7 +634,7 @@ SELECT
 -- DELETE FROM mysql.user WHERE user = 'StreamoonUser';
 
 -- CASO DE PROBLEMA NA CRIAÇÃO DO USUÁRIO DESCOMENTAR A PROXIMA LINHA 
--- DROP USER 'StreamoonUser'@'%';
+DROP USER 'StreamoonUser'@'%';
 
 CREATE USER 'StreamoonUser'@'%' IDENTIFIED BY 'Moon2023';
 
