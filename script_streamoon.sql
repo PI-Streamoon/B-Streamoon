@@ -51,7 +51,7 @@ CREATE TABLE
 	IF NOT EXISTS terminal (
 	idTerminal INT NOT NULL AUTO_INCREMENT,
 	comando VARCHAR(255) NOT NULL,
-	retorno TEXT NOT NULL,
+	retorno TEXT,
 	fkServidor INT,
 	PRIMARY KEY(idTerminal),
 	CONSTRAINT `fk_Terminal_Servidor` FOREIGN KEY (`fkTerminal`) REFERENCES servidor(`idServidor`) ON DELETE NO ACTION ON UPDATE NO ACTION
