@@ -7,9 +7,12 @@ GO
 USE streamoon;
 GO
 
+SET LANGUAGE us_english;
+GO
+
 CREATE TABLE empresa
 (
-	idEmpresa int NOT NULL PRIMARY KEY  IDENTITY(484020, 1), 
+	idEmpresa int NOT NULL PRIMARY KEY  IDENTITY(484018, 1), 
 	nome nvarchar(45) NULL DEFAULT NULL, 
 	cnpj nchar(14) NULL DEFAULT NULL, 
 	localidade nvarchar(45) NULL DEFAULT NULL
@@ -179,11 +182,11 @@ INSERT INTO
         descricao
     )
 VALUES (
-        484020,
+        484018,
         '12345-678',
         'Local X, Andar 2'
     ), (
-        484021,
+        484019,
         '98765-432',
         'Local Y, Andar 12'
     );
@@ -373,4 +376,4 @@ DROP USER IF EXISTS StreamoonUser;
 CREATE USER StreamoonUser FOR LOGIN StreamoonUser;
 
 -- Concedendo permiss�es ao usu�rio no banco de dados
-GRANT ALL PRIVILEGES TO StreamoonUser;
+GRANT INSERT, UPDATE, DELETE, SELECT ON SCHEMA::dbo TO StreamoonUser;
