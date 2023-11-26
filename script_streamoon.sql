@@ -42,10 +42,11 @@ CREATE TABLE
         idServidor INT NOT NULL AUTO_INCREMENT,
         fkLocais INT NOT NULL,
         fkOrigem INT,
+        endercoMAC VARCHAR(20),
         PRIMARY KEY (idServidor),
         CONSTRAINT `fk_Servidor_Origem` FOREIGN KEY (`fkOrigem`) REFERENCES servidor(`idServidor`) ON DELETE NO ACTION ON UPDATE NO ACTION,
         CONSTRAINT `fk_Servidor_Locais1` FOREIGN KEY (`fkLocais`) REFERENCES locais (`idLocais`) ON DELETE NO ACTION ON UPDATE NO ACTION
-    ) AUTO_INCREMENT = 2222;
+) AUTO_INCREMENT = 2222;
 
 CREATE TABLE
 	IF NOT EXISTS terminal (
@@ -54,7 +55,7 @@ CREATE TABLE
 	retorno TEXT,
 	fkServidor INT,
 	PRIMARY KEY(idTerminal),
-	CONSTRAINT `fk_Terminal_Servidor` FOREIGN KEY (`fkTerminal`) REFERENCES servidor(`idServidor`) ON DELETE NO ACTION ON UPDATE NO ACTION
+	CONSTRAINT `fk_Terminal_Servidor` FOREIGN KEY (`idTerminal`) REFERENCES servidor(`idServidor`) ON DELETE NO ACTION ON UPDATE NO ACTION
 	) AUTO_INCREMENT = 1;
         
 CREATE TABLE
