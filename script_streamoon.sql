@@ -1,4 +1,4 @@
--- Active: 1698205327640@@127.0.0.1@3306@streamoon
+-- Active: 1698667238418@@127.0.0.1@3306@streamoon
 DROP DATABASE IF EXISTS streamoon;
 
 CREATE DATABASE streamoon;
@@ -656,12 +656,28 @@ CREATE TABLE Chamados (
     idChamado INT PRIMARY KEY AUTO_INCREMENT,
     titulo VARCHAR(150),
     descricao VARCHAR(250),
-    statusChamado VARCHAR(50),
     dataAbertura DATETIME,
     isAberto BOOLEAN,
     prioridade VARCHAR(20),
     responsavel VARCHAR(100)
-); 
+) AUTO_INCREMENT = 1; 
+
+INSERT INTO Chamados (titulo, descricao, dataAbertura, isAberto, prioridade, responsavel) 
+VALUES 
+('Problema na Rede', 'Não consigo acessar a internet', '2023-11-25 09:00:00', TRUE, 'Alta', 'Suzy'),
+('Erro no Sistema', 'O aplicativo está travando constantemente', '2023-11-25 10:30:00', TRUE, 'Média', 'Carl'),
+('Solicitação de Novo Software', 'Precisamos de uma nova ferramenta de gerenciamento', '2023-11-25 11:45:00', TRUE, 'Baixa', 'Carlos'),
+('Problema com componente', 'O componente parou de funcionar', '2023-11-25 12:15:00', TRUE, 'Alta', 'Ana'),
+('Atualização de Software', 'Solicito atualização para a última versão', '2023-11-25 13:30:00', TRUE, 'Média', 'Pedro'),
+('Problema no Email', 'Não consigo enviar emails', '2023-11-25 14:45:00', TRUE, 'Alta', 'Luisa'),
+('Solicitação de Treinamento', 'Precisamos de um treinamento em segurança cibernética', '2023-11-25 15:20:00', TRUE, 'Baixa', 'Fernanda'),
+('Problema no Acesso ao Sistema', 'Não consigo fazer login no sistema', '2023-11-25 16:00:00', FALSE, 'Média', 'Rafael'),
+('Solicitação de Acesso a Dados', 'Preciso de acesso aos dados do projeto', '2023-11-25 17:15:00', TRUE, 'Baixa', 'Gabriel'),
+('Problema no Servidor', 'O servidor está lento', '2023-11-25 18:30:00', TRUE, 'Alta', 'Isabela'),
+('Problema com Paginação do Site', 'Usuários estão relatando que as páginas do site não estão sendo exibidas corretamente. Isso afeta a experiência do usuário e requer atenção imediata.', '2023-11-25 20:32:00', TRUE, 'urgente', 'Equipe de Desenvolvimento Web'),
+('Vazamento de Dados Identificado', 'Um vazamento de dados foi identificado. A equipe de segurança precisa tomar medidas imediatas para mitigar os riscos e investigar a origem.', '2023-11-25 07:54:21', TRUE, 'urgente', 'Equipe de Segurança'),
+('Problema Crítico no Servidor de E-mail', 'Os usuários estão relatando falhas ao enviar e receber e-mails. Este é um problema urgente que precisa ser resolvido imediatamente.', '2023-11-25 15:29:45', TRUE, 'urgente', 'Equipe de TI');
+
 
 SELECT 
     `idEc2` id,
