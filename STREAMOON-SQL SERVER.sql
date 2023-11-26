@@ -45,7 +45,7 @@ CREATE TABLE servidor (
     idServidor INT NOT NULL PRIMARY KEY IDENTITY(2222,1),
     fkLocais INT NOT NULL,
     fkOrigem INT,
-    endercoMAC VARCHAR(20),
+    enderecoMAC VARCHAR(20),
     CONSTRAINT fk_Servidor_Origem FOREIGN KEY (fkOrigem) REFERENCES servidor(idServidor) ON DELETE NO ACTION ON UPDATE NO ACTION,
     CONSTRAINT fk_Servidor_Locais1 FOREIGN KEY (fkLocais) REFERENCES locais (idLocais) ON DELETE NO ACTION ON UPDATE NO ACTION
 );
