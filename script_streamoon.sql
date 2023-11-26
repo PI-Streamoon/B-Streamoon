@@ -1,4 +1,4 @@
--- Active: 1698667238418@@127.0.0.1@3306@streamoon
+-- Active: 1699214368787@@localhost@3306@streamoon
 DROP DATABASE IF EXISTS streamoon;
 
 CREATE DATABASE streamoon;
@@ -139,13 +139,21 @@ CREATE TABLE
 
 CREATE TABLE 
 	IF NOT EXISTS alertasSlack(
-    idAlerta int primary key auto_increment,
-    descricao varchar(50),
-    fkComponente int,
-    isAnalista tinyint,
-    constraint `fk_componente` foreign key (fkComponente) references componente(idComponente) ON DELETE NO ACTION ON UPDATE NO ACTION
+        idAlerta int primary key auto_increment,
+        descricao varchar(50),
+        fkComponente int,
+        isAnalista tinyint,
+        constraint `fk_componente` foreign key (fkComponente) references componente(idComponente) ON DELETE NO ACTION ON UPDATE NO ACTION
     );
 
+CREATE TABLE 
+    IF NOT EXISTS predict (
+        `idPredict` INT PRIMARY KEY AUTO_INCREMENT,
+        `dadoPredict` FLOAT,
+        `fkRegistro` INT,
+        CONSTRAINT `fkRegistro` FOREIGN KEY (`fkRegistro`) REFERENCES registro(`idRegistro`) ON DELETE NO ACTION ON UPDATE NO ACTION
+    );
+    
 -- Criação das Views
 
 SELECT * FROM registro;
