@@ -1,4 +1,4 @@
--- Active: 1698667238418@@127.0.0.1@3306@streamoon
+-- Active: 1698205327640@@127.0.0.1@3306@streamoon
 DROP DATABASE IF EXISTS streamoon;
 
 CREATE DATABASE streamoon;
@@ -26,6 +26,15 @@ CREATE TABLE
         CONSTRAINT `fk_Usuario_Empresa` FOREIGN KEY (`fkEmpresa`) REFERENCES empresa (`idEmpresa`) ON DELETE NO ACTION ON UPDATE NO ACTION,
         CONSTRAINT `fk_Usuario_Usuario1` FOREIGN KEY (`fkAdmin`) REFERENCES usuario (`idUsuario`) ON DELETE NO ACTION ON UPDATE NO ACTION
     ) AUTO_INCREMENT = 1;
+
+CREATE TABLE logMoonAssistant (
+    idLog INT PRIMARY KEY AUTO_INCREMENT
+    ,fkUsuario INT NOT NULL
+    ,msg TEXT NOT NULL
+    ,isBot BOOLEAN NOT NULL
+    ,dtHora DATETIME DEFAULT CURRENT_TIMESTAMP
+    ,CONSTRAINT `fk_logMoonAssistant_usuario` FOREIGN KEY (`fkUsuario`) REFERENCES usuario (`idUsuario`)
+);
 
 CREATE TABLE
     IF NOT EXISTS locais (

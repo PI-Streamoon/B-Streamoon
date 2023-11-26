@@ -34,6 +34,15 @@ CREATE TABLE usuario (
         ON DELETE NO ACTION ON UPDATE NO ACTION
 );
 
+CREATE TABLE logMoonAssistant (
+    idLog INT NOT NULL PRIMARY KEY IDENTITY(1,1)
+    ,fkUsuario INT NOT NULL
+    ,msg TEXT NOT NULL
+    ,isBot BIT NOT NULL
+    ,dtHora DATETIME DEFAULT CURRENT_TIMESTAMP
+    ,CONSTRAINT fk_logMoonAssistant_usuario FOREIGN KEY (fkUsuario) 
+        REFERENCES usuario (idUsuario)
+);
 
 CREATE TABLE locais (
     idLocais INT NOT NULL PRIMARY KEY IDENTITY(100,1),
