@@ -1,9 +1,11 @@
 -- Active: 1700446865473@@127.0.0.1@1433@master
 DROP DATABASE IF EXISTS streamoon;
+
+GO
 CREATE DATABASE streamoon;
-
+GO
 USE streamoon;
-
+GO
 
 CREATE TABLE empresa
 (
@@ -100,6 +102,7 @@ CREATE TABLE dadosec2 (
     CONSTRAINT fk_local_ec2 FOREIGN KEY (fkLocal) REFERENCES locais(idLocais) ON DELETE NO ACTION ON UPDATE NO ACTION
 );
 
+GO
 
 -- Criando a view tabelaRegistros
 CREATE VIEW tabelaRegistros AS
@@ -117,6 +120,8 @@ FROM registro
     JOIN componente ON componenteServidor.fkComponente = componente.idComponente
     JOIN unidadeMedida ON componente.fkUnidadeMedida = unidadeMedida.idUnidadeMedida
 ORDER BY Registro, MomentoRegistro, Componente;
+
+GO
 
 INSERT INTO
     empresa (
@@ -212,6 +217,8 @@ INSERT INTO
 VALUES (2222, 100), (2222, 101), (2222, 102), (2222, 103), (2222, 104), (2222, 105), (2222, 106), (2222, 107), (2222, 108), (2222, 109)
 ,(2223, 100), (2223, 101), (2223, 102), (2223, 103), (2223, 104), (2223, 105), (2223, 106), (2223, 107), (2223, 108), (2223, 109);
 
+GO
+
 -- Tabela registro
 
 
@@ -228,7 +235,7 @@ JOIN
 JOIN
     empresa ON locais.fkEmpresa = empresa.idEmpresa;
 
-
+GO
 -- Criando a view infoUsuario
 CREATE VIEW infoUsuario AS
 SELECT
@@ -239,6 +246,7 @@ FROM
     usuario AS u
 JOIN
     empresa ON u.fkEmpresa = empresa.idEmpresa;
+GO
 
 -- Criando a view registroColunar
 CREATE VIEW registroColunar AS
@@ -300,6 +308,8 @@ INNER JOIN componenteServidor ON componenteServidor.idComponenteServidor = regis
 INNER JOIN servidor ON componenteServidor.fkServidor = servidor.idServidor
 INNER JOIN componente ON componente.idComponente = componenteServidor.fkComponente
 GROUP BY servidor.idServidor, registro.dtHora;
+GO
+
 
 -- Criando a view falhasColunas
 CREATE VIEW falhasColunas AS
@@ -351,12 +361,15 @@ SELECT
 FROM registroColunar
 GROUP BY idServidor, MomentoRegistro;
 
+GO
+
 -- Criando um login no SQL Server
+DROP LOGIN StreamoonUser;
 CREATE LOGIN StreamoonUser WITH PASSWORD = 'Moon2023';
 
 -- Criando um usu�rio associado ao login no banco de dados desejado
 USE streamoon;
-DROP USER StreamoonUser;
+DROP USER IF EXISTS StreamoonUser;
 CREATE USER StreamoonUser FOR LOGIN StreamoonUser;
 
 -- Concedendo permiss�es ao usu�rio no banco de dados
