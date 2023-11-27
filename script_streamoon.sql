@@ -711,7 +711,7 @@ SELECT
 -- DELETE FROM mysql.user WHERE user = 'StreamoonUser';
 
 -- CASO DE PROBLEMA NA CRIAÇÃO DO USUÁRIO DESCOMENTAR A PROXIMA LINHA 
-DROP USER 'StreamoonUser'@'localhost';
+-- DROP USER 'StreamoonUser'@'localhost';
 
 CREATE USER 'StreamoonUser'@'localhost' IDENTIFIED BY 'Moon2023';
 
