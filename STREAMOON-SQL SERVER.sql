@@ -167,14 +167,14 @@ INSERT INTO
         email
     )
 VALUES (
-        484020,
+        484018,
         NULL,
         'Carl',
         '$2a$10$.jeLR4RKBa6ML96w0lmI5u8rUggbfyfq6IDeAhHtir10nyTasv5K2',
         '12345678901',
         'carl@gmail.com' -- 203457
     ), (
-        484020,
+        484018,
         1,
         'suzy',
         '$2a$10$i4K5pWN.1cs/5/Z9lLJ9r.VkS1W8Z/pjK5E5TMAnqgfIfSyR1RU0a',
