@@ -1,4 +1,4 @@
--- Active: 1699214368787@@localhost@3306@streamoon
+-- Active: 1698667238418@@127.0.0.1@3306@streamoon
 DROP DATABASE IF EXISTS streamoon;
 
 CREATE DATABASE streamoon;
@@ -112,18 +112,6 @@ CREATE TABLE
         ),
         CONSTRAINT `fk_Registro_ComponenteServidor1` FOREIGN KEY (`fkComponenteServidor`) REFERENCES componenteServidor (`idComponenteServidor`) ON DELETE NO ACTION ON UPDATE NO ACTION
     ) AUTO_INCREMENT = 100000;
-    
--- Inserindo tabela para os chamados, Alteração feita por: Kevyn (07/11/2023)
-CREATE TABLE
-	IF NOT EXISTS chamado (
-		idChamado int primary key auto_increment,
-        fkServidor int,
-        fkRegistro decimal(5,2),
-        horarioAbertura datetime,
-        tempLocal decimal(4,2),
-        CONSTRAINT `fk_servidor_componenteServidor` FOREIGN KEY (`fkServidor`) REFERENCES registro(`fkComponenteServidor`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-        CONSTRAINT `fk_idhamado_idRegistro` FOREIGN KEY (`idChamado`) REFERENCES registro(`idRegistro`) ON DELETE NO ACTION ON UPDATE NO ACTION
-        );
         
 CREATE TABLE
     IF NOT EXISTS dadosec2 (
@@ -166,8 +154,6 @@ CREATE TABLE
 -- Criação das Views
 
 SELECT * FROM registro;
-
-SELECT * FROM chamado;
 
 CREATE VIEW
     tabelaRegistros AS
@@ -521,7 +507,6 @@ SELECT idServidor, MomentoRegistro,
 FROM registroColunar
 GROUP BY idServidor, MomentoRegistro;
 
-
 -- FIM DO CÓDIGO PARA VIEW-------------------------------------------------------------------------------------------------------------------------------------------
 
 -- Selects de Teste
@@ -713,7 +698,7 @@ SELECT
 -- CASO DE PROBLEMA NA CRIAÇÃO DO USUÁRIO DESCOMENTAR A PROXIMA LINHA 
 -- DROP USER 'StreamoonUser'@'localhost';
 
-CREATE USER 'StreamoonUser'@'%' IDENTIFIED BY 'Moon2023';
+-- CREATE USER 'StreamoonUser'@'%' IDENTIFIED BY 'Moon2023';
 
 GRANT ALL PRIVILEGES ON streamoon.* TO 'StreamoonUser'@'%';
 
