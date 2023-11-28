@@ -114,6 +114,16 @@ CREATE TABLE dadosec2 (
     CONSTRAINT fk_local_ec2 FOREIGN KEY (fkLocal) REFERENCES locais(idLocais) ON DELETE NO ACTION ON UPDATE NO ACTION
 );
 
+CREATE TABLE Chamados (
+    idChamado INT PRIMARY KEY IDENTITY(1,1),
+    titulo VARCHAR(150),
+    descricao VARCHAR(250),
+    dataAbertura DATETIME,
+    isAberto BIT,
+    prioridade VARCHAR(20),
+    responsavel VARCHAR(100)
+);
+
 GO
 
 -- Criando a view tabelaRegistros
@@ -232,6 +242,24 @@ VALUES (2222, 100), (2222, 101), (2222, 102), (2222, 103), (2222, 104), (2222, 1
 GO
 
 -- Tabela registro
+
+-- Tabela Chamados
+INSERT INTO Chamados (titulo, descricao, dataAbertura, isAberto, prioridade, responsavel) 
+VALUES 
+('Problema na Rede', 'Não consigo acessar a internet', '2023-11-25T09:00:00', 1, 'Alta', 'Suzy'),
+('Erro no Sistema', 'O aplicativo está travando constantemente', '2023-11-25T10:30:00', 1, 'Média', 'Carl'),
+('Solicitação de Novo Software', 'Precisamos de uma nova ferramenta de gerenciamento', '2023-11-25T11:45:00', 1, 'Baixa', 'Carlos'),
+('Problema com componente', 'O componente parou de funcionar', '2023-11-25T12:15:00', 1, 'Alta', 'Ana'),
+('Atualização de Software', 'Solicito atualização para a última versão', '2023-11-25T13:30:00', 1, 'Média', 'Pedro'),
+('Problema no Email', 'Não consigo enviar emails', '2023-11-25T14:45:00', 1, 'Alta', 'Luisa'),
+('Solicitação de Treinamento', 'Precisamos de um treinamento em segurança cibernética', '2023-11-25T15:20:00', 1, 'Baixa', 'Fernanda'),
+('Problema no Acesso ao Sistema', 'Não consigo fazer login no sistema', '2023-11-25T16:00:00', 1, 'Média', 'Rafael'),
+('Solicitação de Acesso a Dados', 'Preciso de acesso aos dados do projeto', '2023-11-25T17:15:00', 1, 'Baixa', 'Gabriel'),
+('Problema no Servidor', 'O servidor está lento', '2023-11-25T18:30:00', 1, 'Alta', 'Isabela'),
+('Problema com Paginação do Site', 'Usuários estão relatando que as páginas do site não estão sendo exibidas corretamente. Isso afeta a experiência do usuário e requer atenção imediata.', '2023-11-25T20:32:00', 1, 'urgente', 'Equipe de Desenvolvimento Web'),
+('Vazamento de Dados Identificado', 'Um vazamento de dados foi identificado. A equipe de segurança precisa tomar medidas imediatas para mitigar os riscos e investigar a origem.', '2023-11-25T07:54:21', 1, 'urgente', 'Equipe de Segurança'),
+('Problema Crítico no Servidor de E-mail', 'Os usuários estão relatando falhas ao enviar e receber e-mails. Este é um problema urgente que precisa ser resolvido imediatamente.', '2023-11-25T15:29:45', 1, 'urgente', 'Equipe de TI');
+
 
 
 -- Criando a view infoServidor

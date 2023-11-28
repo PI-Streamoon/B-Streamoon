@@ -674,7 +674,7 @@ VALUES
 ('Atualização de Software', 'Solicito atualização para a última versão', '2023-11-25 13:30:00', TRUE, 'Média', 'Pedro'),
 ('Problema no Email', 'Não consigo enviar emails', '2023-11-25 14:45:00', TRUE, 'Alta', 'Luisa'),
 ('Solicitação de Treinamento', 'Precisamos de um treinamento em segurança cibernética', '2023-11-25 15:20:00', TRUE, 'Baixa', 'Fernanda'),
-('Problema no Acesso ao Sistema', 'Não consigo fazer login no sistema', '2023-11-25 16:00:00', FALSE, 'Média', 'Rafael'),
+('Problema no Acesso ao Sistema', 'Não consigo fazer login no sistema', '2023-11-25 16:00:00', TRUE, 'Média', 'Rafael'),
 ('Solicitação de Acesso a Dados', 'Preciso de acesso aos dados do projeto', '2023-11-25 17:15:00', TRUE, 'Baixa', 'Gabriel'),
 ('Problema no Servidor', 'O servidor está lento', '2023-11-25 18:30:00', TRUE, 'Alta', 'Isabela'),
 ('Problema com Paginação do Site', 'Usuários estão relatando que as páginas do site não estão sendo exibidas corretamente. Isso afeta a experiência do usuário e requer atenção imediata.', '2023-11-25 20:32:00', TRUE, 'urgente', 'Equipe de Desenvolvimento Web'),
