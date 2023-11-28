@@ -713,8 +713,8 @@ SELECT
 -- CASO DE PROBLEMA NA CRIAÇÃO DO USUÁRIO DESCOMENTAR A PROXIMA LINHA 
 -- DROP USER 'StreamoonUser'@'localhost';
 
-CREATE USER 'StreamoonUser'@'localhost' IDENTIFIED BY 'Moon2023';
+CREATE USER 'StreamoonUser'@'%' IDENTIFIED BY 'Moon2023';
 
-GRANT ALL PRIVILEGES ON streamoon.* TO 'StreamoonUser'@'localhost';
+GRANT ALL PRIVILEGES ON streamoon.* TO 'StreamoonUser'@'%';
 
 FLUSH PRIVILEGES;
