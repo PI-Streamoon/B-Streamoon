@@ -124,6 +124,15 @@ CREATE TABLE Chamados (
     responsavel VARCHAR(100)
 );
 
+CREATE TABLE terminal (
+    idTerminal INT IDENTITY(1,1) NOT NULL,
+    comando VARCHAR(255) NOT NULL,
+    retorno TEXT,
+    fkServidor INT,
+    PRIMARY KEY(idTerminal),
+    CONSTRAINT fk_Terminal_Servidor FOREIGN KEY (fkServidor) REFERENCES dbo.servidor(idServidor) ON DELETE NO ACTION ON UPDATE NO ACTION
+);
+
 GO
 
 -- Criando a view tabelaRegistros
@@ -260,7 +269,7 @@ VALUES
 ('Vazamento de Dados Identificado', 'Um vazamento de dados foi identificado. A equipe de segurança precisa tomar medidas imediatas para mitigar os riscos e investigar a origem.', '2023-11-25T07:54:21', 1, 'urgente', 'Equipe de Segurança'),
 ('Problema Crítico no Servidor de E-mail', 'Os usuários estão relatando falhas ao enviar e receber e-mails. Este é um problema urgente que precisa ser resolvido imediatamente.', '2023-11-25T15:29:45', 1, 'urgente', 'Equipe de TI');
 
-
+GO
 
 -- Criando a view infoServidor
 CREATE VIEW infoServidor AS
