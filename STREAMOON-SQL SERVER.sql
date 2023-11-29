@@ -163,7 +163,7 @@ VALUES (
         'AWS',
         '23412247000110',
         'global'
-    );
+    ); -- 484020
 
 -- Tabela usuario
 

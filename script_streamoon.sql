@@ -215,7 +215,7 @@ VALUES (
         '98765432101234',
         'São Jorge da Serra - Perdizes'
     ),(
-        1,
+        NULL,
         'AWS',
         '23412247000110',
         'global'
@@ -703,3 +703,5 @@ SELECT
 GRANT ALL PRIVILEGES ON streamoon.* TO 'StreamoonUser'@'%';
 
 FLUSH PRIVILEGES;
+
+SELECT * FROM locais;
