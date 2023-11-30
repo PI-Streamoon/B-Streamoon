@@ -705,3 +705,7 @@ GRANT ALL PRIVILEGES ON streamoon.* TO 'StreamoonUser'@'%';
 FLUSH PRIVILEGES;
 
 SELECT * FROM locais;
+
+
+
+SELECT * from alertasslack;
